@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="messenger-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Chats</h1>
+                <button class="new-chat-btn" onclick="startNewChat()">+</button>
+            </div>
+            <div class="chat-list" id="chatList">
+                <div class="chat-item active" onclick="selectChat(1)" data-chat-id="1">
+                    <div class="chat-avatar online">JD</div>
+                    <div class="chat-info">
+                        <div class="chat-name">John Doe</div>
+                        <div class="chat-preview">That sounds great!</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">2:30 PM</div>
+                    </div>
+                </div>
+                <div class="chat-item" onclick="selectChat(2)" data-chat-id="2">
+                    <div class="chat-avatar">SM</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Sarah Miller</div>
+                        <div class="chat-preview">See you tomorrow</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">Yesterday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="chat-window">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="header-info">
+                    <div class="header-avatar online">JD</div>
+                    <div class="header-details">
+                        <div class="header-name">John Doe</div>
+                        <div class="header-status">
+                            <span class="status-dot"></span>Active now
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" title="Call" onclick="initiateCall('voice')">📞</button>
+                    <button class="action-btn" title="Video Call" onclick="initiateCall('video')">📹</button>
+                    <button class="action-btn" title="Info" onclick="toggleInfoPanel()">ℹ️</button>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="messages-container" id="messagesContainer">
+                <div class="message-group">
+                    <div class="message bot">
+                        <div class="message-content">
+                            <div class="message-bubble">Hey! How are you doing?</div>
+                            <div class="message-time">2:15 PM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-group">
+                    <div class="message user">
+                        <div class="message-content">
+                            <div class="message-bubble">I'm doing great, thanks for asking!</div>
+                            <div class="message-time">2:16 PM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-group">
+                    <div class="message bot">
+                        <div class="message-content">
+                            <div class="message-bubble">Want to grab coffee tomorrow?</div>
+                            <div class="message-time">2:18 PM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-group">
+                    <div class="message user">
+                        <div class="message-content">
+                            <div class="message-bubble">That sounds great!</div>
+                            <div class="message-time">2:30 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <button class="attachment-btn" title="Add attachment" onclick="addAttachment()">📎</button>
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        class="message-input" 
+                        placeholder="Aa"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button class="emoji-btn" title="Emoji" onclick="toggleEmojiPicker()">😊</button>
+                </div>
+                <button class="send-btn" onclick="sendMessage()" title="Send">➤</button>
+            </div>
+
+            <!-- Emoji Picker -->
+            <div class="emoji-picker" id="emojiPicker" style="display: none;">
+                <div class="emoji-grid">
+                    <span class="emoji" onclick="insertEmoji('😀')">😀</span>
+                    <span class="emoji" onclick="insertEmoji('😂')">😂</span>
+                    <span class="emoji" onclick="insertEmoji('❤️')">❤️</span>
+                    <span class="emoji" onclick="insertEmoji('👍')">👍</span>
+                    <span class="emoji" onclick="insertEmoji('🎉')">🎉</span>
+                    <span class="emoji" onclick="insertEmoji('🚀')">🚀</span>
+                    <span class="emoji" onclick="insertEmoji('✨')">✨</span>
+                    <span class="emoji" onclick="insertEmoji('🔥')">🔥</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Info Panel -->
+        <div class="chat-info-panel" id="chatInfoPanel" style="display: none;">
+            <div class="info-header">
+                <h3>Info</h3>
+                <button class="close-btn" onclick="toggleInfoPanel()">✕</button>
+            </div>
+            <div class="info-content">
+                <div class="info-avatar-large">JD</div>
+                <div class="info-name">John Doe</div>
+                <div class="info-status">Active now</div>
+
+                <div class="info-section">
+                    <h4>Phone</h4>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+
+                <div class="info-section">
+                    <h4>Email</h4>
+                    <p>john.doe@email.com</p>
+                </div>
+
+                <div class="info-section">
+                    <h4>Username</h4>
+                    <p>@johndoe</p>
+                </div>
+
+                <div class="info-actions">
+                    <button onclick="markAsSpam()">Mark as Spam</button>
+                    <button onclick="blockUser()">Block User</button>
+                    <button onclick="clearChat()" class="danger">Clear Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
